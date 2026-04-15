@@ -13,8 +13,8 @@ const config: Config = {
   },
   title: "Canton Assignment",
   tagline: "",
-  url: "https://your-docusaurus-test-site.com",
-  baseUrl: "/",
+  url: "https://wise4rmgod.github.io",
+  baseUrl: "/assignment/",
   onBrokenLinks: "throw",
   favicon: "img/favicon.ico",
 
