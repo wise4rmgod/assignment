@@ -1,0 +1,256 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Canton Participant Node API",
+    "description": "API for onboarding a user to a Canton network by allocating a Party, submitting a command, and querying active contracts.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://your-canton-node.example.com",
+      "description": "Canton Participant Node"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "AllocatePartyRequest": {
+        "type": "object",
+        "required": ["party_hint"],
+        "properties": {
+          "party_hint": {
+            "type": "string",
+            "example": "Alice",
+            "description": "A human-readable label used as a hint when generating the Party ID."
+          }
+        }
+      },
+      "AllocatePartyResponse": {
+        "type": "object",
+        "properties": {
+          "party": {
+            "type": "string",
+            "example": "Alice::1220f3a9c8e4b7..."
+          }
+        }
+      },
+      "SubmitCommandRequest": {
+        "type": "object",
+        "required": ["party", "commands", "timeout"],
+        "properties": {
+          "party": {
+            "type": "string",
+            "example": "Alice::1220f3a9c8e4b7...",
+            "description": "The Party ID submitting the transaction."
+          },
+          "commands": {
+            "type": "object",
+            "required": ["signed_transaction"],
+            "properties": {
+              "signed_transaction": {
+                "type": "string",
+                "example": "<SIGNED_TRANSACTION_PAYLOAD>",
+                "description": "Signed transaction payload."
+              }
+            }
+          },
+          "timeout": {
+            "type": "integer",
+            "example": 30,
+            "description": "Maximum wait time in seconds."
+          }
+        }
+      },
+      "SubmitCommandResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "transaction_id": {
+            "type": "string",
+            "example": "abc123xyz"
+          }
+        }
+      },
+      "ActiveContractsRequest": {
+        "type": "object",
+        "required": ["party"],
+        "properties": {
+          "party": {
+            "type": "string",
+            "example": "Alice::1220f3a9c8e4b7...",
+            "description": "Party whose contracts are queried."
+          }
+        }
+      },
+      "Contract": {
+        "type": "object",
+        "properties": {
+          "contract_id": {
+            "type": "string",
+            "example": "00ab34cd..."
+          },
+          "template_id": {
+            "type": "string",
+            "example": "MyApp:Agreement"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "example": {
+              "owner": "Alice",
+              "status": "ACTIVE"
+            }
+          }
+        }
+      },
+      "ActiveContractsResponse": {
+        "type": "object",
+        "properties": {
+          "contracts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Contract"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v2/parties/allocate": {
+      "post": {
+        "summary": "Allocate a new Party",
+        "operationId": "allocateParty",
+        "requestBody": {
+          "required": true,
+          "description": "Create a new Party identity.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AllocatePartyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Party successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllocatePartyResponse"
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Example response",
+                    "value": {
+                      "party": "Alice::1220f3a9c8e4b7..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/commands/submitUntilTimeout": {
+      "post": {
+        "summary": "Submit a command",
+        "operationId": "submitCommand",
+        "requestBody": {
+          "required": true,
+          "description": "Submit a signed transaction.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitCommandRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transaction submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitCommandResponse"
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Successful transaction",
+                    "value": {
+                      "status": "success",
+                      "transaction_id": "abc123xyz"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/state/active-contracts": {
+      "post": {
+        "summary": "Query active contracts",
+        "operationId": "getActiveContracts",
+        "requestBody": {
+          "required": true,
+          "description": "Retrieve contracts for a Party.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActiveContractsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of active contracts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActiveContractsResponse"
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Contracts returned",
+                    "value": {
+                      "contracts": [
+                        {
+                          "contract_id": "00ab34cd...",
+                          "template_id": "MyApp:Agreement",
+                          "payload": {
+                            "owner": "Alice",
+                            "status": "ACTIVE"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
