@@ -14,7 +14,7 @@ const config: Config = {
   title: "Canton Assignment",
   tagline: "",
   url: "https://wise4rmgod.github.io",
-  baseUrl: "/assignment/",
+  baseUrl: "/",
   onBrokenLinks: "throw",
   favicon: "img/favicon.ico",
 
