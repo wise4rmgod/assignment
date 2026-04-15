@@ -80,7 +80,7 @@ const config: Config = {
           position: "left",
           label: "Assignment",
         },
-        { to: "/blog", label: "Blog", position: "left" },
+        
         {
           label: "API",
           position: "left",

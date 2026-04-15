@@ -21,19 +21,36 @@ The steps are designed to give you a fast path to a working setup.
 
 ## Prerequisites
 
-Before you begin, make sure you have the following installed:
+Before you start, ensure you have the following tools installed and set up. Each one is required to build, run, and configure the project correctly.
 
-#### 1. Code editor
+### 1. Code editor
 
-Use any editor of your choice. This guide uses Visual Studio Code.
+You need a code editor to write and manage the project files.
+:::tip[Recommended]
+- Download [Visual Studio Code](https://code.visualstudio.com/download)
+- It provides good support for Java, environment configuration, and extensions for developer workflows.
+:::
 
-#### 2. Java (JDK 17 or later)
+You can use another editor if you prefer, but the instructions in this guide assume VS Code.
 
-Required to build and run backend services.
+### 2. Java (JDK 17 or later)
 
-### 3. DPM (Daml Package Manager)
+You must have [Java Development Kit (JDK)](https://www.oracle.com/uk/java/technologies/downloads/) installed.
 
-Install DPM and ensure it is available in your system path.
+This is required because the backend services are written in Java and need the JDK to compile and run.
+
+Ensure you are using version 17 or newer.
+
+### 3. direnv
+
+You need [direnv](https://direnv.net/docs/installation.html) installed.
+
+This tool automatically loads environment variables when you enter the project directory, so you do not have to set them manually each time you open a terminal.
+
+
+### 4. DPM (Daml Package Manager)
+
+Install [DPM](https://docs.digitalasset.com/build/3.4/dpm/dpm.html) and ensure it is available in your system path.
 
 For macOS:
 
@@ -47,20 +64,27 @@ To verify:
 dpm --version
 ```
 
-### 4. direnv
-
-Used to automatically load environment variables for the project.
 
 ### 5. Nix
 
 Required for reproducible development environments.
 
-* macOS/Linux: Install Nix normally
+* macOS/Linux: Install [Nix](https://nixos.org/download/) normally
 * Windows: Use WSL 2 with administrator privileges
 
 ### 6. Docker
 
-Docker must be installed and running. This project depends on containers for services like Canton, PostgreSQL, and Keycloak.
+You must have [Docker](https://www.docker.com/products/docker-desktop/) installed and running.
+
+This project relies on Docker to run essential services in containers, including:
+
+* Canton (distributed ledger runtime)
+* PostgreSQL (database)
+* Keycloak (authentication and identity management)
+
+> Make sure Docker is running before you start the project, otherwise the required services will not be available.
+
+
 ## Installation
 
 ### Step 1: Clone the repository
@@ -325,16 +349,6 @@ make stop && make clean-all
 
 Run `make clean-all` regularly during development to avoid conflicts in future builds.
 :::
-
-
-## What to do next
-
-Now that the application is running:
-
-* Explore the UI and APIs
-* Interact with the Canton console
-* Review the project structure and architecture
-* Start modifying the Quickstart to fit your use case
 
 ## Success Metrics
 I measure success by tracking how developers interact with the guide. I use Google Analytics to check metrics like time on page and bounce rate. If people leave quickly, it means something is wrong. If they stay longer, it shows the guide is helpful.

@@ -72,13 +72,20 @@ Output format:
 
 
 ## What it did well:
-1. It gave me good sample request and response examples
-2. The intro was good and on point
-3. The prerequisites too was very good
-4. The step by step instruction was good 
 
-## What i changed
-1. I made research on the official docs to get accurate links to back some sections of the guide
-2. I ensure it followed a Google writing style guide by editing the content.
-3. I rewrote the prerequisites to follow a good style even though what AI gave me was still good.
-4. 
+1. It provided clear sample request and response examples that help users understand how the API behaves in practice. This makes it easier to validate inputs and outputs while testing.
+2. The introduction was strong and to the point, giving a quick understanding of what the guide is about without unnecessary detail.
+3. The prerequisites section was well structured and useful, clearly outlining what users need before starting the tutorial.
+4. The step-by-step instructions were clear and easy to follow, helping users progress through the workflow in a logical order.
+5. Overall, the content was solid and technically accurate, but it wasn’t fully beginner-friendly in some areas, especially where assumptions were made.
+6. Some sections were not linked to the official documentation, which made it harder for users to verify details or explore deeper explanations when needed.
+
+## What I changed:
+
+1. I researched the official documentation and added accurate links to improve trust and ensure users can reference authoritative sources when needed. This also helped reduce ambiguity in technical sections.
+2. I revised the content to align with the Google Developer Documentation Style Guide, improving consistency, tone, and readability across the guide.
+3. I rewrote the prerequisites section to make it clearer and more structured, ensuring each requirement is easy to understand and why it is needed is more obvious.
+4. I added Mermaid.js diagrams to visually represent the workflow, making complex steps easier to understand at a glance rather than relying only on text.
+5. I included an interactive API documentation and playground so users can test requests in real time, which improves learning through hands-on experience.
+6. I added relevant links throughout the guide where necessary to reduce long explanations and allow users to quickly jump to more detailed official resources when needed.
+7. I also modified the AI-generated content to better reflect my own voice and writing style. I reviewed the entire guide for clarity, consistency, and flow, refining sections where explanations were unclear or too generic, and ensuring the final output was easy to follow and more aligned with a human-authored technical documentation style.
